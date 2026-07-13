@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NPA SMART SYSTEM - Istikmal LP Builder 4-in-1</title>
+    <title>NPA SMART SYSTEM - Istikmal LP Builder Ultimate</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -27,12 +27,15 @@
     </script>
 
     <style>
-        body { font-family: 'Montserrat', sans-serif; }
+        body { font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
+        
+        /* Tema Builder */
         .builder-bg { background-color: #0f172a; color: #fff; min-height: 100vh; }
         .glass-panel { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(212, 175, 55, 0.2); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
         .premium-input { background: rgba(0, 0, 0, 0.5); border: 1px solid #334155; color: #d4af37; transition: all 0.3s ease; }
         .premium-input:focus { border-color: #d4af37; outline: none; }
         
+        /* Tema Landing Page */
         .lp-hero-bg { 
             background-size: cover !important; 
             background-position: center !important; 
@@ -53,20 +56,19 @@
         <header class="border-b border-gray-800 p-4 bg-black">
             <div class="max-w-4xl mx-auto text-center">
                 <h1 class="text-2xl font-extrabold tracking-wider"><span class="text-yellow-500">NPA</span> SMART SYSTEM</h1>
-                <p class="text-gray-400 text-xs tracking-widest mt-1">ISTIKMAL LP BUILDER (4-IN-1)</p>
+                <p class="text-gray-400 text-xs tracking-widest mt-1">ISTIKMAL LP BUILDER (ULTIMATE)</p>
             </div>
         </header>
 
-        <main class="max-w-md mx-auto p-4 mt-6">
+        <main class="max-w-md mx-auto p-4 mt-4">
             <div class="glass-panel rounded-2xl p-6">
-                <h2 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">Buat Link Untuk Mitra</h2>
+                <h2 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">Buat Landing Page Mitra</h2>
                 
                 <div class="space-y-4">
-                    <!-- Sembunyikan domain agar UI lebih bersih di HP -->
                     <input type="hidden" id="inputDomain" readonly>
 
                     <div>
-                        <label class="block text-xs font-semibold text-brand-gold mb-1 uppercase tracking-wider">🎯 PILIH KAMAR (TEMA LP)</label>
+                        <label class="block text-xs font-semibold text-brand-gold mb-1 uppercase tracking-wider">🎯 1. PILIH KAMAR (TEMA LP)</label>
                         <select id="inputTema" class="premium-input w-full p-3 rounded-lg text-sm font-bold bg-gray-900" onchange="generateLink()">
                             <option value="umroh">1. Dana Umroh & Haji</option>
                             <option value="pendidikan">2. Dana Pendidikan Anak</option>
@@ -75,24 +77,35 @@
                         </select>
                     </div>
 
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-400 mb-1 mt-4">NAMA MITRA</label>
-                        <input type="text" id="inputNama" class="premium-input w-full p-3 rounded-lg text-sm font-bold" placeholder="Contoh: Sugiarto Kurniawan" onkeyup="generateLink()">
+                    <div class="pt-2 border-t border-gray-800">
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">👤 2. NAMA KONSULTAN (MITRA)</label>
+                        <input type="text" id="inputNama" class="premium-input w-full p-3 rounded-lg text-sm font-bold" placeholder="Contoh: Budi Santoso" onkeyup="generateLink()">
                     </div>
                     
                     <div>
-                        <label class="block text-xs font-semibold text-gray-400 mb-1">NOMOR WA (Mulai dari 62)</label>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">📱 3. NOMOR WA (Mulai dari 62)</label>
                         <input type="number" id="inputWa" class="premium-input w-full p-3 rounded-lg text-sm font-bold font-mono" placeholder="628123456789" onkeyup="generateLink()">
                     </div>
 
-                    <div class="pt-4">
-                        <label class="block text-xs font-semibold text-yellow-500 mb-1 uppercase">Link Siap Sebar:</label>
-                        <textarea id="outputLink" class="premium-input w-full p-3 rounded-lg text-xs font-mono h-24" readonly placeholder="Pilih tema dan isi data di atas..."></textarea>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">🖼️ 4. LINK FOTO MITRA (Opsional)</label>
+                        <p class="text-[10px] text-gray-500 mb-1">Upload foto ke <i>postimages.org</i>, copy "Direct Link" (.jpg/.png) ke sini.</p>
+                        <input type="text" id="inputFoto" class="premium-input w-full p-3 rounded-lg text-xs font-mono text-gray-300" placeholder="https://..." onkeyup="generateLink()">
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-800">
+                        <label class="block text-xs font-semibold text-yellow-500 mb-1 uppercase">🔗 LINK SIAP SEBAR:</label>
+                        <textarea id="outputLink" class="premium-input w-full p-3 rounded-lg text-xs font-mono h-20" readonly placeholder="Isi data di atas untuk generate link..."></textarea>
                     </div>
                     
-                    <button onclick="copyLink()" class="w-full bg-gradient-to-r from-yellow-600 to-yellow-400 text-black font-bold py-3.5 rounded-xl shadow-lg active:scale-95 transition">
-                        📋 COPY LINK
-                    </button>
+                    <div class="grid grid-cols-2 gap-3 pt-2">
+                        <button onclick="copyLink()" class="bg-gradient-to-r from-yellow-600 to-yellow-400 text-black font-bold py-3 rounded-xl shadow-lg active:scale-95 transition text-sm">
+                            📋 COPY LINK
+                        </button>
+                        <button onclick="testPreview()" class="bg-gray-700 text-white font-bold py-3 rounded-xl shadow-lg border border-gray-500 hover:bg-gray-600 active:scale-95 transition text-sm">
+                            👁️ TEST PREVIEW
+                        </button>
+                    </div>
                 </div>
             </div>
         </main>
@@ -110,45 +123,48 @@
             </div>
         </nav>
 
-        <!-- Hero Section (Dinamis) -->
-        <section id="lp-hero" class="lp-hero-bg text-center px-4 py-16 text-white" style="background-image: linear-gradient(to bottom, rgba(6, 78, 59, 0.8), rgba(6, 78, 59, 0.95)), url('https://images.unsplash.com/photo-1565552645632-d725e8bfc19a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
-            <p class="text-brand-gold font-semibold tracking-widest text-xs uppercase mb-3">Istikmal Syariah</p>
-            <h1 id="lp-title" class="text-3xl md:text-5xl font-serif font-bold leading-tight mb-4">
-                Rindu Baitullah? <br>Wujudkan Perjalanan <span class="italic gold-text-gradient">Amanah.</span>
+        <!-- Hero Section -->
+        <section id="lp-hero" class="lp-hero-bg text-center px-4 py-20 text-white">
+            <p id="lp-tag" class="text-brand-gold font-semibold tracking-widest text-xs uppercase mb-3">Istikmal Syariah</p>
+            <h1 id="lp-title" class="text-3xl md:text-5xl font-serif font-bold leading-tight mb-4 drop-shadow-lg">
+                Loading...
             </h1>
-            <p id="lp-desc" class="text-sm md:text-base text-gray-200 mb-8 max-w-lg mx-auto leading-relaxed">
-                Solusi manajemen dana Umroh berbasis Syariah. Aman, dilindungi asuransi jiwa, dan percepatan dana lewat 3iReborn.
+            <p id="lp-desc" class="text-sm md:text-base text-gray-200 mb-8 max-w-lg mx-auto leading-relaxed drop-shadow-md">
+                Mohon tunggu, menyiapkan data...
             </p>
-            <a href="#cta-section" class="inline-block bg-brand-gold text-brand-dark px-8 py-3 rounded-full font-bold shadow-lg">Mulai Rencanakan</a>
+            <a href="#cta-section" class="inline-block bg-brand-gold text-brand-dark px-8 py-3.5 rounded-full font-bold shadow-lg hover:bg-yellow-400 transition">Mulai Rencanakan</a>
         </section>
 
-        <!-- Konsep Section (Universal 3i) -->
-        <section class="py-12 px-5 max-w-4xl mx-auto">
-            <h2 class="text-2xl font-serif font-bold text-gray-900 mb-4 text-center">Tiga Manfaat Dalam Satu Solusi</h2>
-            <p class="text-sm text-gray-600 mb-8 text-center leading-relaxed">
-                Kami hadir sebagai solusi <b>Wealth Management Syariah</b>. Kami mengunci komitmen Anda agar target finansial tercapai dengan aman.
+        <!-- Konsep Section (Pilar 3i Dinamis) -->
+        <section class="py-16 px-5 max-w-4xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-serif font-bold text-gray-900 mb-4 text-center">Tiga Manfaat Dalam Satu Solusi</h2>
+            <p class="text-sm text-gray-600 mb-10 text-center leading-relaxed max-w-2xl mx-auto">
+                Kami hadir sebagai solusi <b>Wealth Management Syariah</b>. Mengunci komitmen Anda agar target finansial tercapai dengan aman, dilindungi asuransi, dan berpotensi menghasilkan income.
             </p>
             
-            <div class="space-y-4">
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
-                    <div class="text-2xl mt-1">💼</div>
+            <div class="space-y-5">
+                <!-- Investasi -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-5 hover:shadow-md transition">
+                    <div class="text-3xl mt-1">💼</div>
                     <div>
-                        <h3 class="font-bold text-gray-900 text-sm">Investasi Syariah</h3>
-                        <p class="text-xs text-gray-500 mt-1">Dana Anda berkembang secara halal untuk melawan inflasi di masa depan.</p>
+                        <h3 class="font-bold text-gray-900 text-base">Investasi Syariah</h3>
+                        <p id="desc-inv" class="text-sm text-gray-500 mt-2 leading-relaxed">Dana Anda berkembang secara halal untuk melawan inflasi di masa depan.</p>
                     </div>
                 </div>
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
-                    <div class="text-2xl mt-1">🛡️</div>
+                <!-- Proteksi -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-5 hover:shadow-md transition">
+                    <div class="text-3xl mt-1">🛡️</div>
                     <div>
-                        <h3 class="font-bold text-gray-900 text-sm">Proteksi Jiwa</h3>
-                        <p class="text-xs text-gray-500 mt-1">Keluarga tercinta terlindungi secara finansial jika terjadi risiko tak terduga.</p>
+                        <h3 class="font-bold text-gray-900 text-base">Proteksi Jiwa</h3>
+                        <p id="desc-ins" class="text-sm text-gray-500 mt-2 leading-relaxed">Keluarga tercinta terlindungi secara finansial jika terjadi risiko tak terduga.</p>
                     </div>
                 </div>
-                <div class="bg-brand-dark p-5 rounded-xl shadow-lg border border-brand-main flex items-start gap-4 text-white">
-                    <div class="text-2xl mt-1">🚀</div>
+                <!-- Income -->
+                <div class="bg-brand-dark p-6 rounded-2xl shadow-lg border border-brand-main flex items-start gap-5 text-white transform hover:-translate-y-1 transition">
+                    <div class="text-3xl mt-1">🚀</div>
                     <div>
-                        <h3 class="font-bold text-brand-gold text-sm">Passive Income</h3>
-                        <p class="text-xs text-gray-200 mt-1">Jalankan bisnisnya, dapatkan income bulanan untuk percepatan target Anda!</p>
+                        <h3 class="font-bold text-brand-gold text-base">Passive Income</h3>
+                        <p id="desc-inc" class="text-sm text-gray-200 mt-2 leading-relaxed">Jalankan bisnisnya, dapatkan income bulanan untuk percepatan target Anda!</p>
                     </div>
                 </div>
             </div>
@@ -159,83 +175,126 @@
             <h2 class="text-2xl font-serif font-bold mb-4">Mari Berdiskusi</h2>
             <p class="text-sm text-gray-400 mb-8">Konsultasikan rencana masa depan Anda bersama konsultan resmi kami:</p>
             
-            <div class="bg-gray-800 p-6 rounded-2xl max-w-sm mx-auto border border-gray-700 mb-8 shadow-xl">
-                <div class="w-16 h-16 bg-brand-gold rounded-full mx-auto mb-3 flex items-center justify-center text-2xl">👤</div>
-                <h3 id="displayNama" class="text-xl font-bold text-brand-gold uppercase preview-nama">NAMA KONSULTAN</h3>
-                <p class="text-xs text-gray-400">Financial Advisor 3iReborn</p>
+            <div class="bg-gray-800 p-8 rounded-3xl max-w-sm mx-auto border border-gray-700 mb-8 shadow-2xl relative overflow-hidden">
+                <!-- Ornamen Background Kotak Konsultan -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-brand-gold opacity-5 rounded-bl-full"></div>
+                
+                <!-- Area Foto / Avatar -->
+                <div id="foto-container" class="relative z-10 w-20 h-20 mx-auto mb-4">
+                    <!-- Default Avatar -->
+                    <div id="default-avatar" class="w-full h-full bg-brand-gold rounded-full flex items-center justify-center text-3xl shadow-inner border-2 border-brand-main">👤</div>
+                    <!-- Custom Foto Profile -->
+                    <img id="custom-avatar" src="" alt="Konsultan" class="hidden w-full h-full rounded-full object-cover shadow-lg border-2 border-brand-gold" onerror="this.classList.add('hidden'); document.getElementById('default-avatar').classList.remove('hidden');">
+                </div>
+                
+                <h3 id="displayNama" class="relative z-10 text-xl font-bold text-brand-gold uppercase preview-nama">NAMA KONSULTAN</h3>
+                <p class="relative z-10 text-xs text-gray-400 mt-1">Financial Advisor 3iReborn</p>
             </div>
             
-            <a id="btnWhatsapp" href="#" class="preview-wa-btn inline-flex items-center gap-2 bg-green-500 text-white px-8 py-4 rounded-full font-bold text-sm shadow-[0_0_15px_rgba(34,197,94,0.4)] animate-bounce">
+            <a id="btnWhatsapp" href="#" class="preview-wa-btn inline-flex items-center gap-2 bg-green-500 text-white px-8 py-4 rounded-full font-bold text-sm shadow-[0_0_20px_rgba(34,197,94,0.3)] hover:scale-105 transition animate-pulse">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 Chat WhatsApp Sekarang
             </a>
             
-            <div class="mt-10 pt-6 border-t border-gray-800 text-xs text-gray-500">
+            <div class="mt-12 pt-6 border-t border-gray-800 text-xs text-gray-500">
                 <p>&copy; 2026 NPA Smart System. Diawasi oleh DSN-MUI & OJK.</p>
             </div>
         </section>
     </div>
 
-    <!-- SCRIPT TANGGUH 4-IN-1 -->
+    <!-- SCRIPT TANGGUH 4-IN-1 (ULTIMATE) -->
     <script>
-        // Database 4 Kamar Istikmal Syariah
+        // DATABASE LENGKAP 4 KAMAR (GANTI SEMUA TEXT SESUAI KONTEKS)
         const temaData = {
             umroh: {
+                tag: "Program Umroh & Haji",
                 title: "Rindu Baitullah? <br>Wujudkan Perjalanan <span class='italic gold-text-gradient'>Amanah.</span>",
                 desc: "Solusi manajemen dana Umroh & Haji berbasis Syariah. Aman, dilindungi asuransi jiwa, dan ada peluang percepatan dana.",
                 bg: "https://images.unsplash.com/photo-1565552645632-d725e8bfc19a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                pesan: "Umroh & Haji"
+                pesanWa: "Umroh & Haji",
+                inv: "Dana Umroh Anda dikelola secara halal di instrumen syariah, berkembang melawan inflasi biaya travel yang terus naik tiap tahun.",
+                ins: "Niat suci Anda terlindungi. Jika terjadi risiko tutup usia sebelum berangkat, ada santunan asuransi untuk bekal keluarga mewujudkan niat Anda.",
+                inc: "Jalankan bisnis 3iReborn, dapatkan pasif income bulanan yang bisa dipakai untuk PERCEPATAN PELUNASAN Umroh Anda tanpa potong gaji!"
             },
             pendidikan: {
+                tag: "Dana Pendidikan Anak",
                 title: "Siapkan Masa Depan <br>Pendidikan <span class='italic gold-text-gradient'>Buah Hati.</span>",
                 desc: "Solusi manajemen dana Pendidikan berbasis Syariah. Pastikan anak Anda mendapatkan pendidikan terbaik tanpa khawatir tergerus inflasi.",
                 bg: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                pesan: "Pendidikan Anak"
+                pesanWa: "Pendidikan Anak",
+                inv: "Biaya sekolah naik 10-15% per tahun. Dana pendidikan anak Anda akan dikembangkan secara syariah agar mampu mengimbangi kenaikan biaya tersebut.",
+                ins: "Masa depan anak terjamin. Jika pencari nafkah tutup usia, santunan asuransi turun untuk memastikan sekolah anak tidak putus di tengah jalan.",
+                inc: "Ekstra income dari bisnis 3iReborn bisa Anda gunakan untuk tambahan bayar SPP atau biaya bimbingan belajar anak setiap bulannya."
             },
             pensiun: {
+                tag: "Dana Pensiun & Hari Tua",
                 title: "Nikmati Masa Tua <br>dengan <span class='italic gold-text-gradient'>Tenang & Mandiri.</span>",
                 desc: "Solusi manajemen dana Pensiun berbasis Syariah. Bebas finansial di hari tua tanpa harus membebani anak cucu kelak.",
                 bg: "https://images.unsplash.com/photo-1473155315252-4752538cb339?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                pesan: "Pensiun & Hari Tua"
+                pesanWa: "Pensiun & Hari Tua",
+                inv: "Bangun aset Anda dari sekarang. Dana pensiun akan dikelola jangka panjang agar Anda tetap memiliki simpanan berharga saat fisik tak lagi sanggup bekerja.",
+                ins: "Berikan warisan terbaik, bukan beban. Santunan asuransi jiwa memastikan keluarga yang ditinggalkan tetap memiliki pegangan hidup.",
+                inc: "Bangun jaringan bisnisnya sejak muda. Saat pensiun nanti, Anda tidak hanya punya tabungan, tapi juga mesin pencetak passive income setiap bulan!"
             },
             multiguna: {
+                tag: "Rencana Keuangan Multiguna",
                 title: "Wujudkan Impian <br>Masa Depan <span class='italic gold-text-gradient'>Keluarga.</span>",
                 desc: "Solusi manajemen dana Multiguna berbasis Syariah. Rencanakan pernikahan, renovasi rumah, atau impian lainnya dengan terarah.",
                 bg: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                pesan: "Perencanaan Keuangan Multiguna"
+                pesanWa: "Perencanaan Keuangan Multiguna",
+                inv: "Apapun impian Anda (modal nikah, beli tanah, renovasi), kunci uang Anda di instrumen syariah agar tidak bocor untuk pengeluaran konsumtif.",
+                ins: "Selain menabung untuk impian, Anda otomatis memproteksi nilai ekonomi diri Anda bagi keluarga melalui Asuransi Jiwa Syariah.",
+                inc: "Butuh impian terwujud lebih cepat? Jalankan sistem 3iReborn dan gunakan bonus bulanannya sebagai suntikan dana segar impian Anda."
             }
         };
 
-        // 1. Deteksi Saat Halaman Dibuka
+        // 1. Deteksi URL Saat Dibuka
         window.onload = function() {
             try {
                 let currentUrl = window.location.href.split('?')[0].split('#')[0];
+                if(currentUrl.indexOf('file://') !== -1) {
+                    currentUrl = "https://3ireborn.github.io/npa-istikmalsyariah-builder/index.html"; // Fallback URL
+                }
                 document.getElementById('inputDomain').value = currentUrl;
 
                 const urlParams = new URLSearchParams(window.location.search);
                 const modeTema = urlParams.get('tema');
                 const modeName = urlParams.get('nama');
                 const modeWa = urlParams.get('wa');
+                const modeFoto = urlParams.get('foto');
 
                 if (modeName && modeWa) {
-                    // MASUK MODE LANDING PAGE
+                    /* --- MASUK MODE LANDING PAGE PROSPEK --- */
                     document.getElementById('lp-mode').classList.add('mode-active');
                     
-                    // Eksekusi Tema (Kamar)
                     const temaTerpilih = modeTema || 'umroh'; 
                     const data = temaData[temaTerpilih];
                     
+                    // Ganti Header LP
+                    document.getElementById('lp-tag').innerText = data.tag;
                     document.getElementById('lp-title').innerHTML = data.title;
                     document.getElementById('lp-desc').innerText = data.desc;
                     document.getElementById('lp-hero').style.backgroundImage = `linear-gradient(to bottom, rgba(6, 78, 59, 0.8), rgba(6, 78, 59, 0.95)), url('${data.bg}')`;
 
-                    // Eksekusi Identitas Mitra
+                    // Ganti Text 3i Dinamis
+                    document.getElementById('desc-inv').innerText = data.inv;
+                    document.getElementById('desc-ins').innerText = data.ins;
+                    document.getElementById('desc-inc').innerText = data.inc;
+
+                    // Data Mitra & WA
                     document.getElementById('displayNama').innerText = decodeURIComponent(modeName);
-                    
-                    const pesanWa = `Assalamualaikum Kak ${decodeURIComponent(modeName)}, saya tertarik dengan Program Dana ${data.pesan} Istikmal Syariah 3iReborn. Boleh minta info detailnya?`;
+                    const pesanWa = `Assalamualaikum Kak ${decodeURIComponent(modeName)}, saya tertarik dengan Program ${data.pesanWa} Istikmal Syariah 3iReborn. Boleh minta info detailnya?`;
                     document.getElementById('btnWhatsapp').href = `https://wa.me/${modeWa}?text=${encodeURIComponent(pesanWa)}`;
+
+                    // Handle Foto Profil
+                    if(modeFoto && modeFoto.trim() !== "") {
+                        document.getElementById('default-avatar').classList.add('hidden');
+                        const customAvatar = document.getElementById('custom-avatar');
+                        customAvatar.src = decodeURIComponent(modeFoto);
+                        customAvatar.classList.remove('hidden');
+                    }
                 } else {
-                    // MASUK MODE BUILDER
+                    /* --- MASUK MODE BUILDER (Dashboard) --- */
                     document.getElementById('builder-mode').classList.add('mode-active');
                 }
             } catch(e) {
@@ -243,29 +302,32 @@
             }
         };
 
-        // 2. Generate Link Otomatis Saat Ngetik/Milih Kamar
+        // 2. Generate Link
         function generateLink() {
             const tema = document.getElementById('inputTema').value;
             const nama = document.getElementById('inputNama').value;
+            const foto = document.getElementById('inputFoto').value;
             let wa = document.getElementById('inputWa').value;
             
             wa = wa.replace(/[^0-9]/g, '');
             const baseUrl = document.getElementById('inputDomain').value;
             
             if(nama && wa) {
-                // Sekarang linknya ada tambahan parameter &tema=
-                const finalLink = `${baseUrl}?tema=${tema}&nama=${encodeURIComponent(nama)}&wa=${wa}`;
+                let finalLink = `${baseUrl}?tema=${tema}&nama=${encodeURIComponent(nama)}&wa=${wa}`;
+                if(foto) {
+                    finalLink += `&foto=${encodeURIComponent(foto)}`;
+                }
                 document.getElementById('outputLink').value = finalLink;
             } else {
                 document.getElementById('outputLink').value = "";
             }
         }
 
-        // 3. Copy Link Aman
+        // 3. Tombol Copy Link
         function copyLink() {
             const outputText = document.getElementById('outputLink');
             if(!outputText.value) {
-                alert("Ndan, pilih kamar dan ketik Nama & WA dulu ya!");
+                alert("Ndan, isi dulu Nama dan Nomor WA mitranya!");
                 return;
             }
 
@@ -273,11 +335,21 @@
             outputText.setSelectionRange(0, 99999);
             try {
                 document.execCommand('copy');
-                alert("✅ Link Landing Page berhasil disalin!\n\nKirimkan link ini ke prospek/mitra. Tampilan web otomatis menyesuaikan Tema Kamar yang Ndan pilih tadi.");
+                alert("✅ Link berhasil disalin!\n\nKirimkan ke prospek. Tampilan web dan teks penjelasannya sudah otomatis menyesuaikan Tema Kamar yang dipilih.");
             } catch (err) {
-                alert("Gagal copy otomatis. Silakan blok tulisan link lalu 'Copy'.");
+                alert("Gagal copy otomatis. Silakan blok tulisan link di kotak lalu copy manual.");
             }
+        }
+
+        // 4. Tombol Test Preview (Buka Tab Baru)
+        function testPreview() {
+            const link = document.getElementById('outputLink').value;
+            if(!link) {
+                alert("Ndan, isi dulu Nama dan WA-nya sampai link muncul, baru bisa di-test!");
+                return;
+            }
+            window.open(link, '_blank');
         }
     </script>
 </body>
-</html>
+</html> 
