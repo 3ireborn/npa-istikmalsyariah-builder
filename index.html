@@ -111,13 +111,13 @@
     <!-- 2. LANDING PAGE MODE (UNTUK PROSPEK)       -->
     <!-- ========================================== -->
     <div id="lp-mode" class="bg-gray-50 text-gray-800">
-        <!-- Navbar (Full Navy/Dark Gray) -->
+        <!-- Navbar -->
         <nav class="bg-gray-900 shadow-xl p-4 sticky top-0 z-50 w-full">
             <div class="max-w-4xl mx-auto flex justify-between items-center">
                 <!-- Area Logo -->
                 <div id="logo-container" class="h-8 flex items-center">
                     <span id="default-logo" class="font-serif font-bold text-xl text-white">3i<span class="text-brand-gold">Reborn</span></span>
-                    <img id="custom-logo" src="" alt="Logo 3iReborn" class="hidden h-full object-contain">
+                    <img id="custom-logo" src="" alt="Logo" class="hidden h-full object-contain">
                 </div>
                 <a href="#cta-section" class="bg-brand-gold text-brand-dark px-5 py-2 rounded-full text-xs font-bold shadow hover:bg-yellow-400 transition">Konsultasi</a>
             </div>
@@ -222,21 +222,22 @@
             </a>
             
             <div class="mt-12 pt-6 border-t border-gray-800 text-xs text-gray-500">
-                <p>&copy; 2026 NPA Smart System. Diawasi oleh DSN-MUI & OJK.</p>
+                <p id="disp-disc" class="mb-3 italic">Program Istikmal Syariah diawasi oleh DSN-MUI & OJK.</p>
+                <p id="disp-copy" class="text-sm font-semibold text-gray-400 mb-2">&copy; 2026 NPA Smart System.</p>
+                <p id="disp-tag" class="text-xs text-brand-gold opacity-80">#3iReborn #NganggurAjaBisa #DisabilitasPunyaKarya</p>
             </div>
         </section>
     </div>
 
     <!-- SCRIPT TANGGUH -->
     <script>
-        // DATABASE 4 KAMAR DENGAN GAMBAR HD DARI BOS SUGIARTO
         const temaData = {
             umroh: {
                 tag: "Program Umroh & Haji",
                 title: "Rindu Baitullah? <br>Wujudkan Perjalanan <span class='italic gold-text-gradient'>Amanah.</span>",
                 desc: "Solusi manajemen dana Umroh & Haji. Aman, dilindungi asuransi jiwa, dan percepatan lewat income bisnis.",
                 bg: "https://i.postimg.cc/4dRgwW2t/kabah.png", 
-                overlay: "rgba(6, 78, 59, 0.75)", // Hijau gelap transparan
+                overlay: "rgba(6, 78, 59, 0.65)", // Hijau gelap transparan, ketebalan diturunkan
                 pesanWa: "Umroh & Haji",
                 inv: "Dana Umroh Anda dikelola secara halal di instrumen syariah, berkembang melawan inflasi biaya travel yang terus naik.",
                 ins: "Niat suci Anda terlindungi. Jika terjadi risiko tutup usia sebelum berangkat, ada santunan asuransi untuk mewujudkan niat Anda.",
@@ -247,7 +248,7 @@
                 title: "Siapkan Masa Depan <br>Pendidikan <span class='italic text-pink-300 drop-shadow-md'>Buah Hati.</span>",
                 desc: "Solusi manajemen dana Pendidikan. Pastikan anak Anda mendapatkan pendidikan terbaik tanpa khawatir biaya inflasi.",
                 bg: "https://i.postimg.cc/7Z4S84CX/sekolah.png", 
-                overlay: "rgba(159, 18, 57, 0.75)", // Merah/Pink gelap transparan
+                overlay: "rgba(159, 18, 57, 0.55)", // Merah/Pink gelap transparan, ketebalan diturunkan agar ceria
                 pesanWa: "Pendidikan Anak",
                 inv: "Biaya sekolah naik tiap tahun. Dana pendidikan anak dikembangkan secara syariah agar mengimbangi kenaikan biaya tersebut.",
                 ins: "Masa depan anak terjamin. Jika pencari nafkah tutup usia, santunan asuransi turun memastikan sekolah anak tidak putus.",
@@ -258,7 +259,7 @@
                 title: "Nikmati Masa Tua <br>dengan <span class='italic gold-text-gradient'>Ketenangan.</span>",
                 desc: "Solusi manajemen dana Pensiun. Menua dengan sejahtera dan bebas finansial tanpa membebani anak cucu kelak.",
                 bg: "https://i.postimg.cc/c1YKsjGb/tua.png", 
-                overlay: "rgba(15, 23, 42, 0.85)", // Hitam/Slate gelap transparan
+                overlay: "rgba(15, 23, 42, 0.65)", // Hitam/Slate gelap transparan, ketebalan diturunkan agar wajah terlihat
                 pesanWa: "Pensiun & Hari Tua",
                 inv: "Bangun aset dari sekarang. Dana pensiun dikelola jangka panjang agar Anda tetap punya simpanan saat tak sanggup bekerja.",
                 ins: "Berikan warisan terbaik. Santunan asuransi jiwa memastikan keluarga yang ditinggalkan tetap memiliki pegangan hidup.",
@@ -269,7 +270,7 @@
                 title: "Wujudkan Impian <br><span class='italic text-yellow-300 drop-shadow-md'>Pernikahan & Keluarga.</span>",
                 desc: "Solusi dana Multiguna. Rencanakan pernikahan, modal usaha, atau renovasi rumah impian dengan terarah.",
                 bg: "https://i.postimg.cc/KjFmc0nb/nikah.png", 
-                overlay: "rgba(161, 98, 7, 0.75)", // Kuning/Gold gelap transparan
+                overlay: "rgba(161, 98, 7, 0.6)", // Kuning/Gold gelap transparan
                 pesanWa: "Perencanaan Multiguna / Pernikahan",
                 inv: "Apapun impian Anda (modal nikah/renovasi), kunci uang Anda di instrumen syariah agar tak bocor untuk pengeluaran konsumtif.",
                 ins: "Selain menabung impian, Anda otomatis memproteksi nilai ekonomi diri bagi keluarga melalui Asuransi Jiwa Syariah.",
@@ -339,10 +340,10 @@
                 logo.classList.remove('hidden');
             }
 
-            // Render Custom Branding (White Label)
-            if(params.get('copy')) document.getElementById('disp-copy').innerHTML = `&copy; ${decodeURIComponent(params.get('copy'))}`;
-            if(params.get('disc')) document.getElementById('disp-disc').innerHTML = decodeURIComponent(params.get('disc'));
-            if(params.get('tag')) document.getElementById('disp-tag').innerText = decodeURIComponent(params.get('tag'));
+            // Render Custom Branding (White Label) dengan Fallback Default
+            document.getElementById('disp-copy').innerHTML = params.get('copy') ? `&copy; ${decodeURIComponent(params.get('copy'))}` : '&copy; 2026 NPA Smart System.';
+            document.getElementById('disp-disc').innerHTML = params.get('disc') ? decodeURIComponent(params.get('disc')) : 'Program Istikmal Syariah diawasi oleh DSN-MUI & OJK.';
+            document.getElementById('disp-tag').innerText = params.get('tag') ? decodeURIComponent(params.get('tag')) : '#3iReborn #NganggurAjaBisa #DisabilitasPunyaKarya';
         }
 
         // GENERATE LINK DI BUILDER
@@ -388,4 +389,4 @@
         }
     </script>
 </body>
-</html> 
+</html>
