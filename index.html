@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NPA SMART SYSTEM - Istikmal LP Builder Ultimate</title>
+    <title>NPA SMART SYSTEM - Istikmal LP Builder</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -79,23 +79,32 @@
 
                     <div class="pt-2 border-t border-gray-800">
                         <label class="block text-xs font-semibold text-gray-400 mb-1">👤 2. NAMA KONSULTAN (MITRA)</label>
-                        <input type="text" id="inputNama" class="premium-input w-full p-3 rounded-lg text-sm font-bold" placeholder="Contoh: Budi Santoso" onkeyup="generateLink()">
+                        <input type="text" id="inputNama" class="premium-input w-full p-3 rounded-lg text-sm font-bold" placeholder="Contoh: Budi Santoso" onkeyup="generateLink()" onchange="generateLink()">
                     </div>
                     
                     <div>
                         <label class="block text-xs font-semibold text-gray-400 mb-1">📱 3. NOMOR WA (Mulai dari 62)</label>
-                        <input type="number" id="inputWa" class="premium-input w-full p-3 rounded-lg text-sm font-bold font-mono" placeholder="628123456789" onkeyup="generateLink()">
+                        <input type="number" id="inputWa" class="premium-input w-full p-3 rounded-lg text-sm font-bold font-mono" placeholder="628123456789" onkeyup="generateLink()" onchange="generateLink()">
                     </div>
 
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-400 mb-1">🖼️ 4. LINK FOTO MITRA (Opsional)</label>
-                        <p class="text-[10px] text-gray-500 mb-1">Upload foto ke <i>postimages.org</i>, copy "Direct Link" (.jpg/.png) ke sini.</p>
-                        <input type="text" id="inputFoto" class="premium-input w-full p-3 rounded-lg text-xs font-mono text-gray-300" placeholder="https://..." onkeyup="generateLink()">
+                    <!-- TOMBOL AJAIB UPLOAD FOTO ALA V9.4 -->
+                    <div class="pt-2">
+                        <label class="block text-xs font-semibold text-gray-400 mb-2">🖼️ 4. LINK FOTO KONSULTAN (Opsional)</label>
+                        
+                        <button onclick="bukaPostimages()" type="button" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-bold py-3 rounded-lg text-sm flex items-center justify-center gap-2 mb-2 transition shadow-lg active:scale-95">
+                            📸 Upload Foto (Buka Web)
+                        </button>
+                        
+                        <p class="text-[10px] text-gray-400 mb-1 leading-relaxed">
+                            *Klik tombol di atas, upload foto dari galeri Anda, lalu <b>Copy Direct Link</b> (.jpg/.png) dan Paste ke kotak di bawah ini:
+                        </p>
+                        
+                        <input type="text" id="inputFoto" class="premium-input w-full p-3 rounded-lg text-xs font-mono text-gray-300 bg-black/50" placeholder="Paste link foto di sini..." onkeyup="generateLink()" onchange="generateLink()">
                     </div>
 
-                    <div class="pt-4 border-t border-gray-800">
+                    <div class="pt-4 border-t border-gray-800 mt-2">
                         <label class="block text-xs font-semibold text-yellow-500 mb-1 uppercase">🔗 LINK SIAP SEBAR:</label>
-                        <textarea id="outputLink" class="premium-input w-full p-3 rounded-lg text-xs font-mono h-20" readonly placeholder="Isi data di atas untuk generate link..."></textarea>
+                        <textarea id="outputLink" class="premium-input w-full p-3 rounded-lg text-xs font-mono h-24" readonly placeholder="Isi data di atas untuk generate link..."></textarea>
                     </div>
                     
                     <div class="grid grid-cols-2 gap-3 pt-2">
@@ -103,7 +112,7 @@
                             📋 COPY LINK
                         </button>
                         <button onclick="testPreview()" class="bg-gray-700 text-white font-bold py-3 rounded-xl shadow-lg border border-gray-500 hover:bg-gray-600 active:scale-95 transition text-sm">
-                            👁️ TEST PREVIEW
+                            👁️ PREVIEW
                         </button>
                     </div>
                 </div>
@@ -143,7 +152,6 @@
             </p>
             
             <div class="space-y-5">
-                <!-- Investasi -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-5 hover:shadow-md transition">
                     <div class="text-3xl mt-1">💼</div>
                     <div>
@@ -151,7 +159,6 @@
                         <p id="desc-inv" class="text-sm text-gray-500 mt-2 leading-relaxed">Dana Anda berkembang secara halal untuk melawan inflasi di masa depan.</p>
                     </div>
                 </div>
-                <!-- Proteksi -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-5 hover:shadow-md transition">
                     <div class="text-3xl mt-1">🛡️</div>
                     <div>
@@ -159,7 +166,6 @@
                         <p id="desc-ins" class="text-sm text-gray-500 mt-2 leading-relaxed">Keluarga tercinta terlindungi secara finansial jika terjadi risiko tak terduga.</p>
                     </div>
                 </div>
-                <!-- Income -->
                 <div class="bg-brand-dark p-6 rounded-2xl shadow-lg border border-brand-main flex items-start gap-5 text-white transform hover:-translate-y-1 transition">
                     <div class="text-3xl mt-1">🚀</div>
                     <div>
@@ -176,14 +182,11 @@
             <p class="text-sm text-gray-400 mb-8">Konsultasikan rencana masa depan Anda bersama konsultan resmi kami:</p>
             
             <div class="bg-gray-800 p-8 rounded-3xl max-w-sm mx-auto border border-gray-700 mb-8 shadow-2xl relative overflow-hidden">
-                <!-- Ornamen Background Kotak Konsultan -->
                 <div class="absolute top-0 right-0 w-32 h-32 bg-brand-gold opacity-5 rounded-bl-full"></div>
                 
                 <!-- Area Foto / Avatar -->
-                <div id="foto-container" class="relative z-10 w-20 h-20 mx-auto mb-4">
-                    <!-- Default Avatar -->
-                    <div id="default-avatar" class="w-full h-full bg-brand-gold rounded-full flex items-center justify-center text-3xl shadow-inner border-2 border-brand-main">👤</div>
-                    <!-- Custom Foto Profile -->
+                <div id="foto-container" class="relative z-10 w-24 h-24 mx-auto mb-4">
+                    <div id="default-avatar" class="w-full h-full bg-brand-gold rounded-full flex items-center justify-center text-4xl shadow-inner border-2 border-brand-main">👤</div>
                     <img id="custom-avatar" src="" alt="Konsultan" class="hidden w-full h-full rounded-full object-cover shadow-lg border-2 border-brand-gold" onerror="this.classList.add('hidden'); document.getElementById('default-avatar').classList.remove('hidden');">
                 </div>
                 
@@ -202,9 +205,9 @@
         </section>
     </div>
 
-    <!-- SCRIPT TANGGUH 4-IN-1 (ULTIMATE) -->
+    <!-- SCRIPT TANGGUH -->
     <script>
-        // DATABASE LENGKAP 4 KAMAR (GANTI SEMUA TEXT SESUAI KONTEKS)
+        // DATABASE LENGKAP 4 KAMAR
         const temaData = {
             umroh: {
                 tag: "Program Umroh & Haji",
@@ -248,12 +251,17 @@
             }
         };
 
+        // FUNGSI SHORTCUT BUKA WEB GAMBAR
+        function bukaPostimages() {
+            window.open('https://postimages.org/', '_blank');
+        }
+
         // 1. Deteksi URL Saat Dibuka
         window.onload = function() {
             try {
                 let currentUrl = window.location.href.split('?')[0].split('#')[0];
                 if(currentUrl.indexOf('file://') !== -1) {
-                    currentUrl = "https://3ireborn.github.io/npa-istikmalsyariah-builder/index.html"; // Fallback URL
+                    currentUrl = "https://3ireborn.github.io/npa-istikmalsyariah-builder/index.html"; 
                 }
                 document.getElementById('inputDomain').value = currentUrl;
 
@@ -276,17 +284,17 @@
                     document.getElementById('lp-desc').innerText = data.desc;
                     document.getElementById('lp-hero').style.backgroundImage = `linear-gradient(to bottom, rgba(6, 78, 59, 0.8), rgba(6, 78, 59, 0.95)), url('${data.bg}')`;
 
-                    // Ganti Text 3i Dinamis
+                    // Ganti Text 3i
                     document.getElementById('desc-inv').innerText = data.inv;
                     document.getElementById('desc-ins').innerText = data.ins;
                     document.getElementById('desc-inc').innerText = data.inc;
 
-                    // Data Mitra & WA
+                    // Data Mitra
                     document.getElementById('displayNama').innerText = decodeURIComponent(modeName);
                     const pesanWa = `Assalamualaikum Kak ${decodeURIComponent(modeName)}, saya tertarik dengan Program ${data.pesanWa} Istikmal Syariah 3iReborn. Boleh minta info detailnya?`;
                     document.getElementById('btnWhatsapp').href = `https://wa.me/${modeWa}?text=${encodeURIComponent(pesanWa)}`;
 
-                    // Handle Foto Profil
+                    // Foto Profil
                     if(modeFoto && modeFoto.trim() !== "") {
                         document.getElementById('default-avatar').classList.add('hidden');
                         const customAvatar = document.getElementById('custom-avatar');
@@ -341,7 +349,7 @@
             }
         }
 
-        // 4. Tombol Test Preview (Buka Tab Baru)
+        // 4. Tombol Test Preview
         function testPreview() {
             const link = document.getElementById('outputLink').value;
             if(!link) {
@@ -352,4 +360,4 @@
         }
     </script>
 </body>
-</html> 
+</html>
