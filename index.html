@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPA SMART SYSTEM - Istikmal LP Builder 4-in-1</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { dark: '#064e3b', main: '#047857', light: '#d1fae5', gold: '#d4af37' }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Montserrat', sans-serif; }
+        .builder-bg { background-color: #0f172a; color: #fff; min-height: 100vh; }
+        .glass-panel { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(212, 175, 55, 0.2); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+        .premium-input { background: rgba(0, 0, 0, 0.5); border: 1px solid #334155; color: #d4af37; transition: all 0.3s ease; }
+        .premium-input:focus { border-color: #d4af37; outline: none; }
+        
+        .lp-hero-bg { 
+            background-size: cover !important; 
+            background-position: center !important; 
+            transition: background 0.5s ease;
+        }
+        .gold-text-gradient { background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        #builder-mode, #lp-mode { display: none; }
+        .mode-active { display: block !important; }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================== -->
+    <!-- 1. BUILDER MODE (DASHBOARD VVIP NPA)       -->
+    <!-- ========================================== -->
+    <div id="builder-mode" class="builder-bg pb-20">
+        <header class="border-b border-gray-800 p-4 bg-black">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-2xl font-extrabold tracking-wider"><span class="text-yellow-500">NPA</span> SMART SYSTEM</h1>
+                <p class="text-gray-400 text-xs tracking-widest mt-1">ISTIKMAL LP BUILDER (4-IN-1)</p>
+            </div>
+        </header>
+
+        <main class="max-w-md mx-auto p-4 mt-6">
+            <div class="glass-panel rounded-2xl p-6">
+                <h2 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">Buat Link Untuk Mitra</h2>
+                
+                <div class="space-y-4">
+                    <!-- Sembunyikan domain agar UI lebih bersih di HP -->
+                    <input type="hidden" id="inputDomain" readonly>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-brand-gold mb-1 uppercase tracking-wider">🎯 PILIH KAMAR (TEMA LP)</label>
+                        <select id="inputTema" class="premium-input w-full p-3 rounded-lg text-sm font-bold bg-gray-900" onchange="generateLink()">
+                            <option value="umroh">1. Dana Umroh & Haji</option>
+                            <option value="pendidikan">2. Dana Pendidikan Anak</option>
+                            <option value="pensiun">3. Dana Pensiun & Hari Tua</option>
+                            <option value="multiguna">4. Dana Multiguna / Pernikahan</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1 mt-4">NAMA MITRA</label>
+                        <input type="text" id="inputNama" class="premium-input w-full p-3 rounded-lg text-sm font-bold" placeholder="Contoh: Sugiarto Kurniawan" onkeyup="generateLink()">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">NOMOR WA (Mulai dari 62)</label>
+                        <input type="number" id="inputWa" class="premium-input w-full p-3 rounded-lg text-sm font-bold font-mono" placeholder="628123456789" onkeyup="generateLink()">
+                    </div>
+
+                    <div class="pt-4">
+                        <label class="block text-xs font-semibold text-yellow-500 mb-1 uppercase">Link Siap Sebar:</label>
+                        <textarea id="outputLink" class="premium-input w-full p-3 rounded-lg text-xs font-mono h-24" readonly placeholder="Pilih tema dan isi data di atas..."></textarea>
+                    </div>
+                    
+                    <button onclick="copyLink()" class="w-full bg-gradient-to-r from-yellow-600 to-yellow-400 text-black font-bold py-3.5 rounded-xl shadow-lg active:scale-95 transition">
+                        📋 COPY LINK
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. LANDING PAGE MODE (UNTUK PROSPEK)       -->
+    <!-- ========================================== -->
+    <div id="lp-mode" class="bg-gray-50 text-gray-800">
+        <!-- Navbar -->
+        <nav class="bg-brand-dark shadow-md p-4 sticky top-0 z-50">
+            <div class="max-w-4xl mx-auto flex justify-between items-center">
+                <span class="font-serif font-bold text-xl text-white">3i<span class="text-brand-gold">Reborn</span></span>
+                <a href="#cta-section" class="bg-brand-gold text-brand-dark px-4 py-1.5 rounded-full text-xs font-bold shadow">Konsultasi</a>
+            </div>
+        </nav>
+
+        <!-- Hero Section (Dinamis) -->
+        <section id="lp-hero" class="lp-hero-bg text-center px-4 py-16 text-white" style="background-image: linear-gradient(to bottom, rgba(6, 78, 59, 0.8), rgba(6, 78, 59, 0.95)), url('https://images.unsplash.com/photo-1565552645632-d725e8bfc19a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+            <p class="text-brand-gold font-semibold tracking-widest text-xs uppercase mb-3">Istikmal Syariah</p>
+            <h1 id="lp-title" class="text-3xl md:text-5xl font-serif font-bold leading-tight mb-4">
+                Rindu Baitullah? <br>Wujudkan Perjalanan <span class="italic gold-text-gradient">Amanah.</span>
+            </h1>
+            <p id="lp-desc" class="text-sm md:text-base text-gray-200 mb-8 max-w-lg mx-auto leading-relaxed">
+                Solusi manajemen dana Umroh berbasis Syariah. Aman, dilindungi asuransi jiwa, dan percepatan dana lewat 3iReborn.
+            </p>
+            <a href="#cta-section" class="inline-block bg-brand-gold text-brand-dark px-8 py-3 rounded-full font-bold shadow-lg">Mulai Rencanakan</a>
+        </section>
+
+        <!-- Konsep Section (Universal 3i) -->
+        <section class="py-12 px-5 max-w-4xl mx-auto">
+            <h2 class="text-2xl font-serif font-bold text-gray-900 mb-4 text-center">Tiga Manfaat Dalam Satu Solusi</h2>
+            <p class="text-sm text-gray-600 mb-8 text-center leading-relaxed">
+                Kami hadir sebagai solusi <b>Wealth Management Syariah</b>. Kami mengunci komitmen Anda agar target finansial tercapai dengan aman.
+            </p>
+            
+            <div class="space-y-4">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
+                    <div class="text-2xl mt-1">💼</div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 text-sm">Investasi Syariah</h3>
+                        <p class="text-xs text-gray-500 mt-1">Dana Anda berkembang secara halal untuk melawan inflasi di masa depan.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
+                    <div class="text-2xl mt-1">🛡️</div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 text-sm">Proteksi Jiwa</h3>
+                        <p class="text-xs text-gray-500 mt-1">Keluarga tercinta terlindungi secara finansial jika terjadi risiko tak terduga.</p>
+                    </div>
+                </div>
+                <div class="bg-brand-dark p-5 rounded-xl shadow-lg border border-brand-main flex items-start gap-4 text-white">
+                    <div class="text-2xl mt-1">🚀</div>
+                    <div>
+                        <h3 class="font-bold text-brand-gold text-sm">Passive Income</h3>
+                        <p class="text-xs text-gray-200 mt-1">Jalankan bisnisnya, dapatkan income bulanan untuk percepatan target Anda!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="cta-section" class="py-16 px-5 bg-gray-900 text-center text-white">
+            <h2 class="text-2xl font-serif font-bold mb-4">Mari Berdiskusi</h2>
+            <p class="text-sm text-gray-400 mb-8">Konsultasikan rencana masa depan Anda bersama konsultan resmi kami:</p>
+            
+            <div class="bg-gray-800 p-6 rounded-2xl max-w-sm mx-auto border border-gray-700 mb-8 shadow-xl">
+                <div class="w-16 h-16 bg-brand-gold rounded-full mx-auto mb-3 flex items-center justify-center text-2xl">👤</div>
+                <h3 id="displayNama" class="text-xl font-bold text-brand-gold uppercase preview-nama">NAMA KONSULTAN</h3>
+                <p class="text-xs text-gray-400">Financial Advisor 3iReborn</p>
+            </div>
+            
+            <a id="btnWhatsapp" href="#" class="preview-wa-btn inline-flex items-center gap-2 bg-green-500 text-white px-8 py-4 rounded-full font-bold text-sm shadow-[0_0_15px_rgba(34,197,94,0.4)] animate-bounce">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Chat WhatsApp Sekarang
+            </a>
+            
+            <div class="mt-10 pt-6 border-t border-gray-800 text-xs text-gray-500">
+                <p>&copy; 2026 NPA Smart System. Diawasi oleh DSN-MUI & OJK.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- SCRIPT TANGGUH 4-IN-1 -->
+    <script>
+        // Database 4 Kamar Istikmal Syariah
+        const temaData = {
+            umroh: {
+                title: "Rindu Baitullah? <br>Wujudkan Perjalanan <span class='italic gold-text-gradient'>Amanah.</span>",
+                desc: "Solusi manajemen dana Umroh & Haji berbasis Syariah. Aman, dilindungi asuransi jiwa, dan ada peluang percepatan dana.",
+                bg: "https://images.unsplash.com/photo-1565552645632-d725e8bfc19a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                pesan: "Umroh & Haji"
+            },
+            pendidikan: {
+                title: "Siapkan Masa Depan <br>Pendidikan <span class='italic gold-text-gradient'>Buah Hati.</span>",
+                desc: "Solusi manajemen dana Pendidikan berbasis Syariah. Pastikan anak Anda mendapatkan pendidikan terbaik tanpa khawatir tergerus inflasi.",
+                bg: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                pesan: "Pendidikan Anak"
+            },
+            pensiun: {
+                title: "Nikmati Masa Tua <br>dengan <span class='italic gold-text-gradient'>Tenang & Mandiri.</span>",
+                desc: "Solusi manajemen dana Pensiun berbasis Syariah. Bebas finansial di hari tua tanpa harus membebani anak cucu kelak.",
+                bg: "https://images.unsplash.com/photo-1473155315252-4752538cb339?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                pesan: "Pensiun & Hari Tua"
+            },
+            multiguna: {
+                title: "Wujudkan Impian <br>Masa Depan <span class='italic gold-text-gradient'>Keluarga.</span>",
+                desc: "Solusi manajemen dana Multiguna berbasis Syariah. Rencanakan pernikahan, renovasi rumah, atau impian lainnya dengan terarah.",
+                bg: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                pesan: "Perencanaan Keuangan Multiguna"
+            }
+        };
+
+        // 1. Deteksi Saat Halaman Dibuka
+        window.onload = function() {
+            try {
+                let currentUrl = window.location.href.split('?')[0].split('#')[0];
+                document.getElementById('inputDomain').value = currentUrl;
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const modeTema = urlParams.get('tema');
+                const modeName = urlParams.get('nama');
+                const modeWa = urlParams.get('wa');
+
+                if (modeName && modeWa) {
+                    // MASUK MODE LANDING PAGE
+                    document.getElementById('lp-mode').classList.add('mode-active');
+                    
+                    // Eksekusi Tema (Kamar)
+                    const temaTerpilih = modeTema || 'umroh'; 
+                    const data = temaData[temaTerpilih];
+                    
+                    document.getElementById('lp-title').innerHTML = data.title;
+                    document.getElementById('lp-desc').innerText = data.desc;
+                    document.getElementById('lp-hero').style.backgroundImage = `linear-gradient(to bottom, rgba(6, 78, 59, 0.8), rgba(6, 78, 59, 0.95)), url('${data.bg}')`;
+
+                    // Eksekusi Identitas Mitra
+                    document.getElementById('displayNama').innerText = decodeURIComponent(modeName);
+                    
+                    const pesanWa = `Assalamualaikum Kak ${decodeURIComponent(modeName)}, saya tertarik dengan Program Dana ${data.pesan} Istikmal Syariah 3iReborn. Boleh minta info detailnya?`;
+                    document.getElementById('btnWhatsapp').href = `https://wa.me/${modeWa}?text=${encodeURIComponent(pesanWa)}`;
+                } else {
+                    // MASUK MODE BUILDER
+                    document.getElementById('builder-mode').classList.add('mode-active');
+                }
+            } catch(e) {
+                document.getElementById('builder-mode').classList.add('mode-active');
+            }
+        };
+
+        // 2. Generate Link Otomatis Saat Ngetik/Milih Kamar
+        function generateLink() {
+            const tema = document.getElementById('inputTema').value;
+            const nama = document.getElementById('inputNama').value;
+            let wa = document.getElementById('inputWa').value;
+            
+            wa = wa.replace(/[^0-9]/g, '');
+            const baseUrl = document.getElementById('inputDomain').value;
+            
+            if(nama && wa) {
+                // Sekarang linknya ada tambahan parameter &tema=
+                const finalLink = `${baseUrl}?tema=${tema}&nama=${encodeURIComponent(nama)}&wa=${wa}`;
+                document.getElementById('outputLink').value = finalLink;
+            } else {
+                document.getElementById('outputLink').value = "";
+            }
+        }
+
+        // 3. Copy Link Aman
+        function copyLink() {
+            const outputText = document.getElementById('outputLink');
+            if(!outputText.value) {
+                alert("Ndan, pilih kamar dan ketik Nama & WA dulu ya!");
+                return;
+            }
+
+            outputText.select();
+            outputText.setSelectionRange(0, 99999);
+            try {
+                document.execCommand('copy');
+                alert("✅ Link Landing Page berhasil disalin!\n\nKirimkan link ini ke prospek/mitra. Tampilan web otomatis menyesuaikan Tema Kamar yang Ndan pilih tadi.");
+            } catch (err) {
+                alert("Gagal copy otomatis. Silakan blok tulisan link lalu 'Copy'.");
+            }
+        }
+    </script>
+</body>
+</html>
